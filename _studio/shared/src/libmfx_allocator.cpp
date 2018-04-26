@@ -190,6 +190,7 @@ mfxStatus mfxDefaultAllocator::AllocFrames(mfxHDL pthis, mfxFrameAllocRequest *r
         nbytes=Pitch*Height2 + (Pitch>>1)*(Height2) + (Pitch>>1)*(Height2);
         break;
     case MFX_FOURCC_RGB3:
+    case MFX_FOURCC_RGBP:
         if ((request->Type & MFX_MEMTYPE_FROM_VPPIN) ||
             (request->Type & MFX_MEMTYPE_FROM_VPPOUT) )
         {
@@ -341,6 +342,13 @@ mfxStatus mfxDefaultAllocator::LockFrame(mfxHDL pthis, mfxHDL mid, mfxFrameData 
         ptr->B = sptr;
         ptr->G = ptr->B + 1;
         ptr->R = ptr->B + 2;
+        ptr->PitchHigh = (mfxU16)((3*ALIGN32(fs->info.Width)) / (1 << 16));
+        ptr->PitchLow  = (mfxU16)((3*ALIGN32(fs->info.Width)) % (1 << 16));
+        break;
+    case MFX_FOURCC_RGBP:
+        ptr->B = sptr;
+        ptr->G = ptr->B + ptr->Pitch*Height2;
+        ptr->R = ptr->B + 2*ptr->Pitch*Height2;;
         ptr->PitchHigh = (mfxU16)((3*ALIGN32(fs->info.Width)) / (1 << 16));
         ptr->PitchLow  = (mfxU16)((3*ALIGN32(fs->info.Width)) % (1 << 16));
         break;
