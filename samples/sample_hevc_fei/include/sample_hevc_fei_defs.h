@@ -228,6 +228,9 @@ template<>struct mfx_ext_buffer_id<mfxExtFeiHevcRepackCtrl>{
 template<>struct mfx_ext_buffer_id<mfxExtFeiHevcRepackStat>{
     enum {id = MFX_EXTBUFF_HEVCFEI_REPACK_STAT};
 };
+template<>struct mfx_ext_buffer_id<mfxExtHEVCParam> {
+    enum {id = MFX_EXTBUFF_HEVC_PARAM};
+};
 
 struct CmpExtBufById
 {
@@ -409,6 +412,7 @@ private:
             MFX_EXTBUFF_CODING_OPTION2,
             MFX_EXTBUFF_CODING_OPTION3,
             MFX_EXTBUFF_FEI_PARAM,
+            MFX_EXTBUFF_HEVC_PARAM,
         };
 
         for (mfxU32 i = 0; i < sizeof(allowed)/sizeof(allowed[0]); i++)
