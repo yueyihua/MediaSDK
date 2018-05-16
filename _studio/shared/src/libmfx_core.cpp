@@ -1386,6 +1386,24 @@ mfxStatus CoreDoSWFastCopy(mfxFrameSurface1 *pDst, mfxFrameSurface1 *pSrc, int c
             MFX_CHECK_STS(sts);
             break;
         }
+    case MFX_FOURCC_RGBP:
+        {
+            mfxU8* ptrSrc = pSrc->Data.B;
+            mfxU8* ptrDst = pDst->Data.B;
+            sts = FastCopy::Copy(ptrDst, dstPitch, ptrSrc, srcPitch, roi, copyFlag);
+            MFX_CHECK_STS(sts);
+
+            ptrSrc = pSrc->Data.G;
+            ptrDst = pDst->Data.G;
+            sts = FastCopy::Copy(ptrDst, dstPitch, ptrSrc, srcPitch, roi, copyFlag);
+            MFX_CHECK_STS(sts);
+            ptrSrc = pSrc->Data.B;
+            ptrDst = pDst->Data.B;
+            sts = FastCopy::Copy(ptrDst, dstPitch, ptrSrc, srcPitch, roi, copyFlag);
+            MFX_CHECK_STS(sts);
+
+            break;
+        }
 
     case MFX_FOURCC_AYUV:
     case MFX_FOURCC_RGB4:
